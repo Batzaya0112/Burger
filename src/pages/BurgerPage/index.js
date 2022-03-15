@@ -20,7 +20,14 @@ class BurgerBuilder extends Component {
             meat: 0
         },
         totalPrice: 0,
-        purchasing: false
+        purchasing: false,
+        confirmOrder: false
+    };
+    showConfirmModal = () => {
+        this.setState({confirmOrder: true });
+    };
+    closeConfirmModal = () => {
+        this.setState({confirmOrder: false });
     };
     addIngredient = (type) =>{
         const newAddIngredients = { ...this.state.ingredients };
@@ -44,7 +51,7 @@ class BurgerBuilder extends Component {
         }
         return (
             <div>
-                <Modal>
+                <Modal closeConfirmModal={this.closeConfirmModal} show={this.state.confirmOrder}>
                    <OrderSummary 
                     ingredients={this.state.ingredients}
                     ingredientsNames={INGREDIENT_NAMES}
@@ -52,6 +59,7 @@ class BurgerBuilder extends Component {
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
+                    showConfirmModal={this.showConfirmModal}
                     ingredientsNames={INGREDIENT_NAMES}
                     disabledOrder={!this.state.purchasing}
                     price={this.state.totalPrice}

@@ -18,7 +18,14 @@ const BuildControls = (props) =>{
                     />
                 ))
             }
-            <button disabled={props.disabledOrder} className={css.OrderButton}>Захиалах</button>
+            <button 
+                //synthetic
+                onClick={props.showConfirmModal} 
+                disabled={props.disabledOrder} 
+                className={css.OrderButton}
+            >
+                Захиалах
+            </button>
         </div>
     );
 };

@@ -6,7 +6,7 @@
             <p>Таны сонгосон орцууд: </p>
             <ul>
                 {Object.keys(props.ingredients).map(el => ( 
-                    <li>
+                    <li key={el}>
                         {props.ingredientsNames[el]} : {props.ingredients[el]}
                     </li>
                 ))}
