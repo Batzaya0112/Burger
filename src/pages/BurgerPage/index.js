@@ -51,10 +51,12 @@ class BurgerBuilder extends Component {
         }
         return (
             <div>
-                <Modal closeConfirmModal={this.closeConfirmModal} show={this.state.confirmOrder}>
+                <Modal closeConfirmModal={this.closeConfirmModal} 
+                       show={this.state.confirmOrder}>
                    <OrderSummary 
-                    ingredients={this.state.ingredients}
-                    ingredientsNames={INGREDIENT_NAMES}
+                        price={this.state.totalPrice}
+                        ingredients={this.state.ingredients}
+                        ingredientsNames={INGREDIENT_NAMES}
                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients}/>
