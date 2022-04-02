@@ -14,3 +14,9 @@
     font-size: 20px;
     color: white;
 }
+@media (max-width: 500px){
+    .HideOnMobile{
+        display: none;
+    }
+
+}
