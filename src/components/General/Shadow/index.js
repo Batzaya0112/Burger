@@ -4,7 +4,7 @@ import css from "./style.module.css"
 const Shadow = (props) =>  {
         return props.show ? 
             (<div 
-                onClick={props.closeConfirm} 
+                onClick={props.onClick} 
                 className={css.Shadow}>
             </div>) : null;
 }; 
