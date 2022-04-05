@@ -3,6 +3,8 @@ import Burger from "../../components/Burger";
 import BuildControls from "../../components/BuildControls";
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
+//import axios from "axios";
+import axios from "../../axios-orders"
 //import { type } from "@testing-library/user-event/dist/type";
 const INGREDIENT_PRICES = {salad: 150, cheese: 250, bacon: 800, meat: 1500};
 const INGREDIENT_NAMES = {
@@ -24,6 +26,18 @@ class BurgerBuilder extends Component {
         confirmOrder: false
     };
     continueOrder = () => {
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            addres: {
+                name: 'Saraa',
+                city: 'Ulaanbaatar'
+            }
+        };
+        //axios tsaanaa proms ashigladag
+        axios.post('/orders.json', order).then(response => {
+            alert("amjittai");
+        }).chatch("");
         console.log("urgeljluuleh");
     }
     showConfirmModal = () => {
