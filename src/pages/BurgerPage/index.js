@@ -5,6 +5,7 @@ import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
 //import axios from "axios";
 import axios from "../../axios-orders"
+import Spinner from "../../components/General/Spinner";
 //import { type } from "@testing-library/user-event/dist/type";
 const INGREDIENT_PRICES = {salad: 150, cheese: 250, bacon: 800, meat: 1500};
 const INGREDIENT_NAMES = {
@@ -23,22 +24,46 @@ class BurgerBuilder extends Component {
         },
         totalPrice: 0,
         purchasing: false,
-        confirmOrder: false
+        confirmOrder: false,
+        lastCustomerName: "N/A",
+        loading: false
     };
+
+    componentDidMount = () =>{
+        this.setState({loading: true});
+        axios.get('/orders.json').then( response => {
+            const arr = Object.entries(response.data);
+            arr.forEach(el => {
+                console.log(el[1].addres.name + " ==> " + el[1].price);
+            });
+            //Хамгийн сүүлийн захиалгыг харуулах
+            const lastOrder = arr[arr.length -1][1];
+            this.setState({ingredients: lastOrder.ingredients, 
+                           totalPrice: lastOrder.price,
+                           lastCustomerName: lastOrder.addres.name 
+            });
+        }).catch(err => console.log(err)).finally(()=>{
+            this.setState({loading: false});
+        });
+    }
+
     continueOrder = () => {
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
             addres: {
-                name: 'Saraa',
+                name: 'Сүрэн',
                 city: 'Ulaanbaatar'
             }
         };
         //axios tsaanaa proms ashigladag
+        //zahialga firabase deer hadgalana
+        this.setState({loading: true});
         axios.post('/orders.json', order).then(response => {
-            alert("amjittai");
-        }).chatch("");
-        console.log("urgeljluuleh");
+           // alert("amjittai");
+        }).finally(()=>{
+            this.setState({loading: false});
+        })
     }
     showConfirmModal = () => {
         this.setState({confirmOrder: true });
@@ -63,6 +88,7 @@ class BurgerBuilder extends Component {
     }
     render() {
         const desableIngredient = {...this.state.ingredients};
+
         for(let key in desableIngredient){
             desableIngredient[key] = desableIngredient[key] <= 0;
         }
@@ -70,14 +96,20 @@ class BurgerBuilder extends Component {
             <div>
                 <Modal closeConfirmModal={this.closeConfirmModal} 
                        show={this.state.confirmOrder}>
-                   <OrderSummary 
+                {this.state.loading ? <Spinner/> : (
+                    <OrderSummary 
                         onCancel={this.closeConfirmModal}
                         onContinue={this.continueOrder}
                         price={this.state.totalPrice}
                         ingredients={this.state.ingredients}
                         ingredientsNames={INGREDIENT_NAMES}
-                   />
+                    />
+                )}
+                   
                 </Modal>
+
+                {this.state.loading && <Spinner />}
+
                 <Burger ingredients={this.state.ingredients}/>
                 <BuildControls 
                     showConfirmModal={this.showConfirmModal}
