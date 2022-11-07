@@ -33,23 +33,33 @@ class BurgerBuilder extends Component {
     }
 
     continueOrder = () => {
-        const order = {
-            ingredients: this.state.ingredients,
-            price: this.state.totalPrice,
-            addres: {
-                name: 'Сүрэн',
-                city: 'Ulaanbaatar'
-            }
-        };
-        //axios tsaanaa proms ashigladag
-        //zahialga firabase deer hadgalana
-        this.setState({loading: true});
-        axios.post('/orders.json', order).then(response => {
-           // alert("amjittai");
-        }).finally(()=>{
-            this.setState({loading: false});
-        })
-    }
+        // const order = {
+        //     ingredients: this.state.ingredients,
+        //     price: this.state.totalPrice,
+        //     addres: {
+        //         name: 'Сүрэн',
+        //         city: 'Ulaanbaatar'
+        //     }
+        // };
+        // //axios tsaanaa proms ashigladag
+        // //zahialga firabase deer hadgalana
+        // this.setState({loading: true});
+        // axios.post('/orders.json', order).then(response => {
+        //    alert("amjittai");
+        // }).finally(()=>{
+        //     this.setState({loading: false});
+        // });
+        const params = [];
+        for(let orts in this.state.ingredients){
+            params.push(orts + "=" + this.state.ingredients[orts]);
+        }
+        const query = params.join("&");
+        this.props.history.push({
+         pathname: "ship",
+         search: query
+        });
+        this.closeConfirmModal();
+    };
     showConfirmModal = () => {
         this.setState({confirmOrder: true });
     };
@@ -72,6 +82,7 @@ class BurgerBuilder extends Component {
 
     }
     render() {
+        console.log(this.props);
         const desableIngredient = {...this.state.ingredients};
 
         for(let key in desableIngredient){

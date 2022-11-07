@@ -7,6 +7,7 @@ import { Component } from 'react/cjs/react.development';
 import OrderPage from '../OrderPage';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
+import { ShippingPage } from '../ShippingPage';
 class App extends Component {
   state = {
     showSidebar: false
@@ -29,6 +30,7 @@ class App extends Component {
       <main className={css.Content}>
         <Switch>
           <Route path="/orders" component={OrderPage} />
+          <Route path="/ship" component={ShippingPage} />
           <Route path="/" component={BurgerPage} />
         </Switch>
         

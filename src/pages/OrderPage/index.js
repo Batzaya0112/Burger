@@ -11,12 +11,16 @@ class OrderPage extends React.Component{
     }
     componentDidMount(){
         this.setState({loading: true});
-        axios.get('/orders.json').then( response => {
-            this.setState({orders: Object.entries(response.data).reverse()});
-           
-        }).catch(err => console.log(err)).finally(()=>{
-            this.setState({loading: false});
-        });
+        axios
+            .get('/orders.json')
+                .then( response => {
+                    this.setState({orders: Object.entries(response.data).reverse()});
+                
+            })
+            .catch(err => console.log(err))
+                .finally(()=>{
+                    this.setState({loading: false});
+                });
     }
     render(){
         return (
