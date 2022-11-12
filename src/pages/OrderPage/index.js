@@ -2,7 +2,7 @@ import React from "react";
 import axios from "../../axios-orders";
 import Spinner from "../../components/General/Spinner";
 import Order from "../../components/Order";
-import css from "./style.module.css";
+//import css from "./style.module.css";
 
 class OrderPage extends React.Component{
     state = {

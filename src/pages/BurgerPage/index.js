@@ -4,7 +4,7 @@ import BuildControls from "../../components/BuildControls";
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
 //import axios from "axios";
-import axios from "../../axios-orders"
+//import axios from "../../axios-orders"
 import Spinner from "../../components/General/Spinner";
 //import { type } from "@testing-library/user-event/dist/type";
 const INGREDIENT_PRICES = {salad: 150, cheese: 250, bacon: 800, meat: 1500};
@@ -33,26 +33,14 @@ class BurgerBuilder extends Component {
     }
 
     continueOrder = () => {
-        // const order = {
-        //     ingredients: this.state.ingredients,
-        //     price: this.state.totalPrice,
-        //     addres: {
-        //         name: 'Сүрэн',
-        //         city: 'Ulaanbaatar'
-        //     }
-        // };
-        // //axios tsaanaa proms ashigladag
-        // //zahialga firabase deer hadgalana
-        // this.setState({loading: true});
-        // axios.post('/orders.json', order).then(response => {
-        //    alert("amjittai");
-        // }).finally(()=>{
-        //     this.setState({loading: false});
-        // });
+        
         const params = [];
         for(let orts in this.state.ingredients){
             params.push(orts + "=" + this.state.ingredients[orts]);
         }
+
+        params.push("price=" + this.state.totalPrice);
+
         const query = params.join("&");
         this.props.history.push({
          pathname: "ship",
