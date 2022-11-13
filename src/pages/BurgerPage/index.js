@@ -34,6 +34,8 @@ class BurgerBuilder extends Component {
 
     continueOrder = () => {
         
+        
+
         const params = [];
         for(let orts in this.state.ingredients){
             params.push(orts + "=" + this.state.ingredients[orts]);

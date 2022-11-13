@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../General/Button";
 import css from "./style.module.css";
-import axios from "axios";
+import axios from "../../axios-orders";
 import Spinner from "../General/Spinner";
 import {withRouter} from "react-router-dom";
 
@@ -24,7 +24,7 @@ class ContactData extends React.Component{
      saveOrder = () =>{
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
+            price: this.props.price,
             addres: {
                 name: this.state.name,
                 city: this.state.city,
@@ -35,7 +35,7 @@ class ContactData extends React.Component{
         //zahialga firabase deer hadgalana
         this.setState({loading: true});
         axios
-            .post('/orders.json', order)
+            .post("/orders.json", order)
             .then(response => {
                 console.log("zahialga amjilttai");
             })
@@ -43,7 +43,7 @@ class ContactData extends React.Component{
                 console.log("zahilaga amjiltgui: " + error)
             }).finally(()=>{
                 this.setState({loading: false});
-                this.props.history.replace('/orders');
+                this.props.history.replace("/orders");
             });
      };
     render (){
@@ -64,7 +64,7 @@ class ContactData extends React.Component{
                                 onChange={this.changeCity}
                                 type="text" 
                                 name="city" 
-                                placeholder="Дүүрэг" />
+                                placeholder="Хот" />
                             <Button text="ИЛГЭЭХ" btnType="Success" clicked={this.saveOrder}/>
                         </div>
                     )}
