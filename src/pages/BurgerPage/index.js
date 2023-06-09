@@ -9,31 +9,17 @@ import OrderSummary from "../../components/OrderSummary";
 import Spinner from "../../components/General/Spinner";
 import * as actions from "../../redux/actions/burgerActions";
 //import { type } from "@testing-library/user-event/dist/type";
-const INGREDIENT_PRICES = {salad: 150, cheese: 250, bacon: 800, meat: 1500};
-const INGREDIENT_NAMES = {
-    salad: "Салад",
-    bacon: "Гахайн мах",
-    cheese: "Бяслаг",
-    meat: "Үхрийн мах"
-};
+
 class BurgerBuilder extends Component {
     state = {
-        purchasing: false,
         confirmOrder: false,
     };
-
-    componentDidMount = () =>{
-        
-    }
-
     continueOrder = () => {
         const params = [];
         for(let orts in this.props.burgeriinOrts){
             params.push(orts + "=" + this.props.burgeriinOrts[orts]);
         }
-
         params.push("price=" + this.this.props.niitUne);
-
         const query = params.join("&");
         this.props.history.push({
          pathname: "ship",
@@ -47,29 +33,11 @@ class BurgerBuilder extends Component {
     closeConfirmModal = () => {
         this.setState({confirmOrder: false });
     };
-    addIngredient = (type) =>{
-        const newAddIngredients = { ...this.props.burgeriinOrts };
-        newAddIngredients[type]++;
-        const newPrice = this.this.props.niitUne + INGREDIENT_PRICES[type];
-        this.setState({purchasing: true, totalPrice: newPrice, ingredients: newAddIngredients});
-    }
-    removeIngredient = (type) =>{
-        if(this.props.burgeriinOrts[type] > 0){
-            const newRemoveIngredients = { ...this.props.burgeriinOrts };
-            newRemoveIngredients[type]--;
-            const newPrice = this.this.props.niitUne - INGREDIENT_PRICES[type];
-            this.setState({purchasing: newPrice > 0, totalPrice: newPrice, ingredients: newRemoveIngredients});
-        }
-
-    }
     render() {
-        console.log(this.props);
         const desableIngredient = {...this.props.burgeriinOrts};
-
         for(let key in desableIngredient){
             desableIngredient[key] = desableIngredient[key] <= 0;
         }
-        console.log("test redux", this.props);
         return (
             <div>
                 <Modal closeConfirmModal={this.closeConfirmModal} 
@@ -80,17 +48,15 @@ class BurgerBuilder extends Component {
                         onContinue={this.continueOrder}
                         price={this.props.niitUne}
                         ingredients={this.props.burgeriinOrts}
-                        ingredientsNames={INGREDIENT_NAMES}
+                        ingredientsNames={this.props.ingredientNames}
                     />
                 )}
-                   
                 </Modal>
-
                 <Burger ingredients={this.props.burgeriinOrts}/>
                 <BuildControls 
                     showConfirmModal={this.showConfirmModal}
-                    ingredientsNames={INGREDIENT_NAMES}
-                    disabledOrder={!this.state.purchasing}
+                    ingredientsNames={this.props.ingredientNames}
+                    disabledOrder={!this.props.purchasing}
                     price={this.props.niitUne}
                     addIngredient={this.props.burgertOrtsNem} 
                     removeIngredient={this.props.burgereesOrtsHas}
@@ -103,7 +69,9 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state =>{
     return {
         burgeriinOrts: state.ingredients,
-        niitUne: state.totalPrice
+        niitUne: state.totalPrice,
+        purchasing: state.purchasing,
+        ingredientNames: state.ingredientNames
     };
 };
 const mapDispatchToProps = dispatch => {
@@ -112,5 +80,4 @@ const mapDispatchToProps = dispatch => {
         burgereesOrtsHas: ortsNer => dispatch(actions.removeIngredient(ortsNer))
     };
 };
-
 export default connect(mapStateToProps, mapDispatchToProps)(BurgerBuilder);
