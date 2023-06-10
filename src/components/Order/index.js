@@ -10,5 +10,4 @@ const Order = (props) =>{
         </div>
     );
 }
-
 export default Order;
