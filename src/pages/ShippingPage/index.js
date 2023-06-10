@@ -5,29 +5,10 @@ import Button from "../../components/General/Button";
 import {Route} from "react-router-dom";
 import ContactData from "../../components/ContactData";
 import css from "./style.module.css";
+import {connect}  from "react-redux";
 
-export class ShippingPage extends Component{
-
-    state = {
-        price: 0,
-        ingredients: null,
-    };
-    //Render func  duudagdhaas umnu ajilna.
-    componentWillMount(){
-        const query = new URLSearchParams(this.props.location.search);
-        const ingredients = {};
-        let price = 0;
-        for(let param of query.entries()){
-            if(param[0]!== "price"){
-                ingredients[param[0]] = param[1];
-            }
-            else{
-                price = param[1];
-            }
-            
-        }
-        this.setState({ingredients, price});
-    }
+ class ShippingPage extends Component{
+    //Render func  duudagdhaas umnu ajillana.
     cancelOrder = () => {
         this.props.history.goBack();
     }
@@ -41,9 +22,9 @@ export class ShippingPage extends Component{
                     <strong>Таны захиалга</strong>
                 </p>
                 <p style={{fontSize: "21px"}}>
-                    <strong>Дүн: {this.state.price}₮</strong>
+                    <strong>Дүн: {this.props.price}₮</strong>
                 </p>
-                <Burger ingredients = {this.state.ingredients}/>
+                <Burger/>
                 <Button 
                     clicked={this.cancelOrder} 
                     btnType="Danger" 
@@ -65,12 +46,15 @@ export class ShippingPage extends Component{
                     )}
                 /> */}
                 <Route path="/ship/contact" >
-                    <ContactData 
-                            ingredients={this.state.ingredients}
-                            price = {this.state.price}
-                    />
+                    <ContactData/>
                 </Route>
             </div>
         ); 
     }
 }
+const mapStateToProps = state =>{
+    return{
+        price: state.totalPrice
+    }
+}
+export default connect(mapStateToProps)(ShippingPage);

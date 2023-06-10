@@ -7,7 +7,7 @@ import { Component } from 'react/cjs/react.development';
 import OrderPage from '../OrderPage';
 import { Route } from 'react-router-dom';
 import { Switch } from 'react-router-dom';
-import { ShippingPage } from '../ShippingPage';
+import ShippingPage from '../ShippingPage';
 class App extends Component {
   state = {
     showSidebar: false
