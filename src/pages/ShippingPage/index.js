@@ -54,7 +54,7 @@ import {connect}  from "react-redux";
 }
 const mapStateToProps = state =>{
     return{
-        price: state.totalPrice
+        price: state.burgerReducer.totalPrice
     }
 }
 export default connect(mapStateToProps)(ShippingPage);

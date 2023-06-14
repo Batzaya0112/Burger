@@ -4,10 +4,10 @@ import './index.css';
 import App from "./pages/App";
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
-import {legacy_createStore as createStore, applyMiddleware} from 'redux';
+import {legacy_createStore as createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import {Provider} from "react-redux";
 import burgerReducer from './redux/reducer/burgerReducer';
-import { CLSThresholds } from 'web-vitals';
+import orderReducer from './redux/reducer/orderReducer';
 
 const loggerMiddleware = store => {
   return next => {
@@ -20,7 +20,15 @@ const loggerMiddleware = store => {
     }
   }
 }
-const store = createStore(burgerReducer, applyMiddleware(loggerMiddleware));
+const reducers = combineReducers({
+      burgerReducer: burgerReducer,
+      orderReducer: orderReducer
+});
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+    reducers, 
+    composeEnhancers(applyMiddleware(loggerMiddleware))
+);
 
 ReactDOM.render(
   <Provider store = {store}>

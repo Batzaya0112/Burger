@@ -22,9 +22,9 @@ import {connect} from "react-redux";
  };
  const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        ingredientNames: state.ingredientNames,
-        price: state.totalPrice
+        ingredients: state.burgerReducer.ingredients,
+        ingredientNames: state.burgerReducer.ingredientNames,
+        price: state.burgerReducer.totalPrice
     };
  };
  export default connect(mapStateToProps)(OrderSummary);
