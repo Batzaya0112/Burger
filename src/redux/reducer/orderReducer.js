@@ -1,36 +1,65 @@
 const initialState = {
-        orders: [
-            [
-                "-NXYlZEQRwueMPXhOBFT",
-                {
-                    addres:{ city: "Darkhan",name: "Bat",street:"01"},
-                    ingredients:{ bacon: 1, cheese :1, meat :0, salad :2},
-                    price: 1350
-                }
-            ],
-        ],
+        // Load order
+        orders: [],
         loading: false,
-        error: null
+        error: null,
+
+        // Save order
+        newOrder: {
+            saving: false,
+            finished: false,
+            error: null
+        }
 };
 const reducer = (state = initialState, action) =>{
-    if(action.type === "LOAD_ORDERS_START"){
-        return{
-            ...state,
-            loading: true
-        };
-    }else if(action.type === "LOAD_ORDERS_SUCCES"){
-        return {
-            ...state,
-            loading: false,
-            orders: action.orders
-        }
-    }else if(action.type === "LOAD_ORDERS_ERROR"){
-        return {
-            ...state,
-            loading: false,
-            error: action.error
-        }
-    }
-    return state;
+
+    switch(action.type){
+        case "LOAD_ORDERS_START": 
+            return{
+                ...state,
+                loading: true
+            };
+        case "LOAD_ORDERS_SUCCES":
+            return {
+                ...state,
+                loading: false,
+                orders: action.orders
+            };
+        case "LOAD_ORDERS_ERROR":
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            };
+        case "SAVE_ORDER_START": 
+            return {
+                ...state,
+                newOrder: {
+                    ...state.newOrder,
+                    saving: true
+                }
+            };
+        case "SAVE_ORDER_SUCCESS":
+            return {
+                ...state,
+                newOrder: {
+                    ...state.newOrder,
+                    saving: false,
+                    finished: true,
+                    error: null
+                }
+            };
+        case "SAVE_ORDER_ERROR":
+            return {
+                ...state,
+                newOrder: {
+                    ...state.newOrder,
+                    saving: false,
+                    finished: true,
+                    error: action.error
+                }
+            };
+        default: return state;
+    };
 };
 export default reducer;
