@@ -8,6 +8,7 @@ import {legacy_createStore as createStore, applyMiddleware, compose, combineRedu
 import {Provider} from "react-redux";
 import burgerReducer from './redux/reducer/burgerReducer';
 import orderReducer from './redux/reducer/orderReducer';
+import signupReducer from './redux/reducer/signupReducer';
 import thunk from 'redux-thunk';
 const loggerMiddleware = store => {
   return next => {
@@ -22,7 +23,8 @@ const loggerMiddleware = store => {
 }
 const reducers = combineReducers({
       burgerReducer: burgerReducer,
-      orderReducer: orderReducer
+      orderReducer:  orderReducer,
+      signupReducer: signupReducer
 });
 const middlewares = [thunk, loggerMiddleware];
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

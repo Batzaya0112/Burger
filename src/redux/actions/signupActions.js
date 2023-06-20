@@ -25,14 +25,12 @@ export const signupUserStart = () => {
     };
 };
 export const signupUserSuccess = (firebaseResultData) => {
-    console.log("signupUserSuccess =========> ",firebaseResultData);
     return{
         type: "SIGNUP_USER_SUCCESS",
         firebaseResultData
     };
 };
 export const signupUserError = (error) => {
-    console.log("signupUserError =========> ",error);
     return{
         type: "SIGNUP_USER_ERROR",
         error
