@@ -8,7 +8,7 @@ import {legacy_createStore as createStore, applyMiddleware, compose, combineRedu
 import {Provider} from "react-redux";
 import burgerReducer from './redux/reducer/burgerReducer';
 import orderReducer from './redux/reducer/orderReducer';
-import signupReducer from './redux/reducer/signupReducer';
+import signupReducer from './redux/reducer/signupLoginReducer';
 import thunk from 'redux-thunk';
 const loggerMiddleware = store => {
   return next => {
