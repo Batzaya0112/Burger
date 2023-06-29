@@ -47,6 +47,14 @@ const reducer = (state = initialState, action) => {
                 firebaseErrorCode: action.error.response.data.error.message,
                 firebaseError: action.error.response.data.error.message
             };
+        case 'LOGOUT':
+            return{
+                ...state,
+                token: null,
+                userId: null,
+                firebaseError: null,
+                firebaseErrorCode: null
+            };
     default: 
             return state;
     }
